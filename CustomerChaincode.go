@@ -101,14 +101,6 @@ type KYCDocument struct{
 	base64String string `json:"base64String"`	
 }
 
-type InsuranceClientInformation struct{
-	insuranceClientInformation InsuranceClientInformation	
-}
-
-
-
-
-
 func (t *CustomerChaincode) Init(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
 
 	var err error
@@ -135,12 +127,13 @@ func (t *CustomerChaincode) Invoke(stub shim.ChaincodeStubInterface, function st
     	var err error
 	
     	fmt.Printf("********Invoke Call with args length :%s\n", len(args))
-	if len(args) < 31 {
-	    fmt.Printf("********Inside Invoke length:%s\n", len(args))
+	
+	if len(args) < 56 {
+	    	fmt.Printf("********Inside Invoke length:%s\n", len(args))
 		return nil, errors.New("Incorrect number of arguments. Need 31 arguments")
 	}
-	TAX_IDENTIFIER = args[3]
-	UNIQUE_IDENTIFIER = args[4]
+	TAX_IDENTIFIER = args[6]
+	UNIQUE_IDENTIFIER = args[7]
 	if (TAX_IDENTIFIER == "" || UNIQUE_IDENTIFIER == ""){
 		return nil, errors.New(" Tax Identifier and Unique Identifier are mandatory")
 	}
@@ -151,8 +144,8 @@ func (t *CustomerChaincode) Invoke(stub shim.ChaincodeStubInterface, function st
 	if err != nil {
 		return CustomerTxsAsBytes, errors.New("Failed to get Customer Records")
 	}
-	var CustomerTxObjects []CustomerData
-	var CustomerTxObjects1 []CustomerData
+	var CustomerTxObjects []InsuranceClientInformation
+	var CustomerTxObjects1 []InsuranceClientInformation
 	json.Unmarshal(CustomerTxsAsBytes, &CustomerTxObjects)
 	length := len(CustomerTxObjects)
 	fmt.Printf("Output from chaincode: %s\n", CustomerTxsAsBytes)
@@ -165,20 +158,22 @@ func (t *CustomerChaincode) Invoke(stub shim.ChaincodeStubInterface, function st
 		obj := CustomerTxObjects[i]
 		//if ((customer_id == obj.CUSTOMER_ID) && (customer_name == obj.CUSTOMER_NAME) && (customer_dob == obj.CUSTOMER_DOB)) 
 		
-		if (((obj.TAX_IDENTIFIER) == TAX_IDENTIFIER) && ((obj.UNIQUE_IDENTIFIER) == UNIQUE_IDENTIFIER)){			
+		if (((obj.InsurancePersonalInfo.panNumber) == TAX_IDENTIFIER) && ((obj.InsurancePersonalInfo.passportNumber) == UNIQUE_IDENTIFIER)){			
 			CustomerTxObjects1 = append(CustomerTxObjects1,obj)
 			//requiredObj = obj
 			objFound = true
 			counter = i
 			break;
 		} 
-		if ((((obj.TAX_IDENTIFIER) == TAX_IDENTIFIER) && ((obj.UNIQUE_IDENTIFIER) != UNIQUE_IDENTIFIER))||((((obj.TAX_IDENTIFIER) != TAX_IDENTIFIER) && ((obj.UNIQUE_IDENTIFIER) == UNIQUE_IDENTIFIER)  ))){
-		return nil, errors.New("Bad Request : Tax Identifier or Unique Identifier mapped for different Customer")
+		if ((((obj.InsurancePersonalInfo.panNumber) == TAX_IDENTIFIER) && ((obj.InsurancePersonalInfo.passportNumber) != UNIQUE_IDENTIFIER))||((((obj.InsurancePersonalInfo.panNumber) != TAX_IDENTIFIER) && ((obj.InsurancePersonalInfo.passportNumber) == UNIQUE_IDENTIFIER)  ))){
+			return nil, errors.New("Bad Request : Tax Identifier or Unique Identifier mapped for different Customer")
 		}
 	
 	}
 	
 	if objFound {
+		
+		//TODO
 		
 		//Update CustomerTxObjects1 with new values from args 
 		
