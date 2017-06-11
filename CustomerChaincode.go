@@ -26,53 +26,87 @@ var (
     Error   *log.Logger
 )
 
-type CustomerDoc struct {
-    DOCUMENT_NAME string `json:"DOCUMENT_NAME"`
-	DOCUMENT_STRING string `json:"DOCUMENT_STRING"`
-}
-type CustomerResidenceAddr struct {
-    AddressLine1  string `json: "AddressLine1"`
-	AddressLine2 string `json: "AddressLine2"`
-	City string `json: "City"`
-	Province  string `json: "Province"`
-	Country string `json: "Country"`
-	PostalCode string `json: "PostalCode"`
-}
-type CustomerPermanentAddr struct {
-    AddressLine1  string `json: "AddressLine1"`
-	AddressLine2 string `json: "AddressLine2"`
-	City string `json: "City"`
-	Province  string `json: "Province"`
-	Country string `json: "Country"`
-	PostalCode string `json: "PostalCode"`
-}
-type CustomerOfficeAddr struct {
-    AddressLine1  string `json: "AddressLine1"`
-	AddressLine2 string `json: "AddressLine2"`
-	City string `json: "City"`
-	Province  string `json: "Province"`
-	Country string `json: "Country"`
-	PostalCode string `json: "PostalCode"`
-}
-type CustomerName struct{
-    CUSTOMER_FIRST_NAME  string `json:"CUSTOMER_FIRST_NAME"`
-	CUSTOMER_MIDDLE_NAME string `json:"CUSTOMER_MIDDLE_NAME"`
-	CUSTOMER_LAST_NAME  string `json:"CUSTOMER_LAST_NAME"`
+type InsuranceClientInformation struct{
+	clientId string `json:"clientId"`
+	personalInfo InsurancePersonalInfo
+	residenceAddress Address
+	permanentAddress Address 
+	officeAddress Address
+	contactDetails ContactDetails
+	employmentDetails EmploymentDetails
+	personalAssets PersonalAssets
+	bankAccountDetails BankDetails
+	KYCDocuments KYCDocuments
+	
 }
 
-type CustomerData struct{
-	CUSTOMER_NAME CustomerName
-	TAX_IDENTIFIER string `json:"TAX_IDENTIFIER"`
-	UNIQUE_IDENTIFIER string `json:"UNIQUE_IDENTIFIER"`
-	CUSTOMER_DOB string `json:"CUSTOMER_DOB"`
-	CUSTOMER_RESIDENT_STATUS string `json:"RESIDENT_STATUS"`
-	CUSTOMER_KYC_PROCESS_DATE string `json:"CUSTOMER_KYC_PROCESS_DATE"`
-	CUSTOMER_KYC_FLAG string `json:"CUSTOMER_KYC_FLAG"`
-	CUSTOMER_RESIDENCE_ADDR CustomerResidenceAddr
-	CUSTOMER_PERMANENT_ADDR CustomerPermanentAddr
-	CUSTOMER_OFFICE_ADDR CustomerOfficeAddr
-	CUSTOMER_DOC []CustomerDoc
-	}
+type InsurancePersonalInfo struct{
+	applicantNumber string `json:"applicantNumber"`
+	firstName string `json:"firstName"`
+	middleName string `json:"middleName"`
+	lastName string `json:"lastName"`
+	dateOfBirth string `json:"dateOfBirth"`
+	panNumber string `json:"panNumber"`
+	passportNumber string `json:"passportNumber"`
+	residentStatus string `json:"residentStatus"`
+	residencePlaceOwnership string `json:"residencePlaceOwnership"`
+	numberofDependents string `json:"numberofDependents"`
+	qualification string `json:"qualification"`
+	annualIncome string `json:"annualIncome"`
+	gender string `json:"gender"`
+	maritalStatus string `json:"maritalStatus"`
+	criminalRecordDetails string `json:"criminalRecordDetails"`
+	financialStability string `json:"financialStability"`
+	creditScore string `json:"creditScore"`
+}
+
+type Address struct{
+	addrLine1 string `json:"addrLine1"`
+	addrLine2 string `json:"addrLine2"`
+	city string `json:"city"`
+	province string `json:"province"`
+	country string `json:"country"`
+	postalCode string `json:"postalCode"`
+	addressType string `json:"addressType"`
+	searchLocation string `json:"searchLocation"`
+}
+
+
+type EmploymentDetails struct{
+	nameOfEmployer string `json:"nameOfEmployer"`
+	designation string `json:"designation"`
+	title string `json:"title"`
+	noOfYearsExperience string `json:"noOfYearsExperience"`	
+}
+
+
+type PersonalAssets struct{
+	assetType string `json:"assetType"`
+	assetName string `json:"assetName"`
+	details string `json:"details"`
+	valueOfAsset string `json:"valueOfAsset"`
+	asOnDate string `json:"asOnDate"`
+	assetType string `json:"assetType"`
+}
+
+type BankDetails struct{
+	bankName string `json:"bankName"`
+	bankBranch string `json:"bankBranch"`
+	accountNo string `json:"accountNo"`
+	swiftCode string `json:"swiftCode"`		
+}
+
+type KYCDocument struct{
+	documentName string `json:"bankName"`
+	base64String string `json:"base64String"`	
+}
+
+type InsuranceClientInformation struct{
+	insuranceClientInformation InsuranceClientInformation	
+}
+
+
+
 
 
 func (t *CustomerChaincode) Init(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
@@ -80,28 +114,27 @@ func (t *CustomerChaincode) Init(stub shim.ChaincodeStubInterface, function stri
 	var err error
 	// Initialize the chaincode
 
-	fmt.Printf("Deployment of Customer ChainCode is completed\n")
-
-	var emptyCustomerTxs []CustomerData
-	jsonAsBytes, _ := json.Marshal(emptyCustomerTxs)
+	var insuranceClientInformationTxs []InsuranceClientInformation
+	jsonAsBytes, _ := json.Marshal(insuranceClientInformationTxs)
 	err = stub.PutState(customerIndexTxStr, jsonAsBytes)
 	if err != nil {
 		return nil, err
 	}
-
-
+	
+	fmt.Printf("Deployment of Customer ChainCode is completed\n")
+	
 	return nil, nil
 }
 
 // Add customer data for the policy
 func (t *CustomerChaincode) Invoke(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
-    
+	
 	var TAX_IDENTIFIER string // Entities
 	var UNIQUE_IDENTIFIER string
 
-    var err error
+    	var err error
 	
-    fmt.Printf("********Invoke Call with args length :%s\n", len(args))
+    	fmt.Printf("********Invoke Call with args length :%s\n", len(args))
 	if len(args) < 31 {
 	    fmt.Printf("********Inside Invoke length:%s\n", len(args))
 		return nil, errors.New("Incorrect number of arguments. Need 31 arguments")
