@@ -36,7 +36,7 @@ type InsuranceClientInformation struct{
 	employmentDetails EmploymentDetails
 	personalAssets PersonalAssets
 	bankAccountDetails BankDetails
-	KYCDocuments KYCDocuments
+	kycDocuments []KYCDocuments
 	
 }
 
@@ -177,36 +177,59 @@ func (t *CustomerChaincode) Invoke(stub shim.ChaincodeStubInterface, function st
 		
 		//Update CustomerTxObjects1 with new values from args 
 		
-		CustomerTxObjects[counter].CUSTOMER_NAME.CUSTOMER_FIRST_NAME = args[0]
-		CustomerTxObjects[counter].CUSTOMER_NAME.CUSTOMER_MIDDLE_NAME = args[1]
-		CustomerTxObjects[counter].CUSTOMER_NAME.CUSTOMER_LAST_NAME   = args[2]
-		CustomerTxObjects[counter].TAX_IDENTIFIER = args[3]
-		CustomerTxObjects[counter].UNIQUE_IDENTIFIER = args[4]
-		CustomerTxObjects[counter].CUSTOMER_DOB = args[5]
-		CustomerTxObjects[counter].CUSTOMER_RESIDENT_STATUS = args[6]
-		CustomerTxObjects[counter].CUSTOMER_KYC_PROCESS_DATE = args[7]
-		CustomerTxObjects[counter].CUSTOMER_KYC_FLAG = args[8]
-		//Code for CustomerResidenceAddr Initialization
-		CustomerTxObjects[counter].CUSTOMER_RESIDENCE_ADDR.AddressLine1 = args[9]
-		CustomerTxObjects[counter].CUSTOMER_RESIDENCE_ADDR.AddressLine2 = args[10]
-		CustomerTxObjects[counter].CUSTOMER_RESIDENCE_ADDR.PostalCode   = args[11]
-		CustomerTxObjects[counter].CUSTOMER_RESIDENCE_ADDR.City = args[12]
-		CustomerTxObjects[counter].CUSTOMER_RESIDENCE_ADDR.Province = args[13]
-		CustomerTxObjects[counter].CUSTOMER_RESIDENCE_ADDR.Country   = args[14]
-		//Code for CustomerPermanentAddr Initialization
-		CustomerTxObjects[counter].CUSTOMER_PERMANENT_ADDR.AddressLine1 = args[15]
-		CustomerTxObjects[counter].CUSTOMER_PERMANENT_ADDR.AddressLine2 = args[16]
-		CustomerTxObjects[counter].CUSTOMER_PERMANENT_ADDR.PostalCode   = args[17]
-		CustomerTxObjects[counter].CUSTOMER_PERMANENT_ADDR.City = args[18]
-		CustomerTxObjects[counter].CUSTOMER_PERMANENT_ADDR.Province = args[19]
-		CustomerTxObjects[counter].CUSTOMER_PERMANENT_ADDR.Country   = args[20]
-		//Code for CustomerOfficeAddr Initialization
-		CustomerTxObjects[counter].CUSTOMER_OFFICE_ADDR.AddressLine1 = args[21]
-		CustomerTxObjects[counter].CUSTOMER_OFFICE_ADDR.AddressLine2 = args[22]
-		CustomerTxObjects[counter].CUSTOMER_OFFICE_ADDR.PostalCode   = args[23]
-		CustomerTxObjects[counter].CUSTOMER_OFFICE_ADDR.City = args[24]
-		CustomerTxObjects[counter].CUSTOMER_OFFICE_ADDR.Province = args[25]
-		CustomerTxObjects[counter].CUSTOMER_OFFICE_ADDR.Country   = args[26]
+		CustomerTxObjects[counter].clientId = args[0]
+		CustomerTxObjects[counter].personalInfo.applicantNumber = args[1]
+		CustomerTxObjects[counter].personalInfo.firstName = args[2]
+		CustomerTxObjects[counter].personalInfo.middleName = args[3]
+		CustomerTxObjects[counter].personalInfo.lastName = args[4]
+		CustomerTxObjects[counter].personalInfo.dateOfBirth= args[5]
+		CustomerTxObjects[counter].personalInfo.panNumber = args[6]
+		CustomerTxObjects[counter].personalInfo.passportNumber = args[7]
+		CustomerTxObjects[counter].personalInfo.residentStatus = args[8]
+		CustomerTxObjects[counter].personalInfo.residencePlaceOwnership = args[9]
+		CustomerTxObjects[counter].personalInfo.numberofDependents = args[10]
+		CustomerTxObjects[counter].personalInfo.qualification   = args[11]
+		CustomerTxObjects[counter].personalInfo.annualIncome = args[12]
+		CustomerTxObjects[counter].personalInfo.gender = args[13]
+		CustomerTxObjects[counter].personalInfo.maritalStatus   = args[14]
+		CustomerTxObjects[counter].personalInfo.criminalRecordDetails = args[15]
+		CustomerTxObjects[counter].personalInfo.financialStability = args[16]
+		CustomerTxObjects[counter].personalInfo.creditScore   = args[17]
+		
+		
+		CustomerTxObjects[counter].residenceAddress.addrLine1 = args[18]
+		CustomerTxObjects[counter].residenceAddress.addrLine2 = args[19]
+		CustomerTxObjects[counter].residenceAddress.city   = args[20]
+		CustomerTxObjects[counter].residenceAddress.province = args[21]
+		CustomerTxObjects[counter].residenceAddress.country = args[22]
+		CustomerTxObjects[counter].residenceAddress.postalCode   = args[23]
+		CustomerTxObjects[counter].residenceAddress.addressType = args[24]
+		CustomerTxObjects[counter].residenceAddress.searchLocation = args[25]
+		
+		
+		CustomerTxObjects[counter].permanentAddress.addrLine1 = args[26]
+		CustomerTxObjects[counter].permanentAddress.addrLine2 = args[27]
+		CustomerTxObjects[counter].permanentAddress.city   = args[28]
+		CustomerTxObjects[counter].permanentAddress.province = args[29]
+		CustomerTxObjects[counter].permanentAddress.country = args[30]
+		CustomerTxObjects[counter].permanentAddress.postalCode   = args[31]
+		CustomerTxObjects[counter].permanentAddress.addressType = args[32]
+		CustomerTxObjects[counter].permanentAddress.searchLocation = args[33]
+		
+		
+		CustomerTxObjects[counter].officeAddress.addrLine1 = args[34]
+		CustomerTxObjects[counter].officeAddress.addrLine2 = args[35]
+		CustomerTxObjects[counter].officeAddress.city   = args[36]
+		CustomerTxObjects[counter].officeAddress.province = args[37]
+		CustomerTxObjects[counter].officeAddress.country = args[38]
+		CustomerTxObjects[counter].officeAddress.postalCode   = args[39]
+		CustomerTxObjects[counter].officeAddress.addressType = args[40]
+		CustomerTxObjects[counter].officeAddress.searchLocation = args[41]
+		
+		
+		//TODO 
+		
+		
 		//Code for the Document Process	
 		fmt.Printf("********pankaj CUSTOMER_DOC:%s\n", args[4])
 		var number_of_docs int
