@@ -240,9 +240,7 @@ func (t *CustomerChaincode) Invoke(stub shim.ChaincodeStubInterface, function st
 		CustomerTxObjects[counter].employmentDetails.nameOfEmployer = args[46]
 		CustomerTxObjects[counter].employmentDetails.designation = args[47]
 		CustomerTxObjects[counter].employmentDetails.title = args[48]
-		CustomerTxObjects[counter].employmentDetails.noOfYearsExperience = args[49]
-		
-		
+		CustomerTxObjects[counter].employmentDetails.noOfYearsExperience = args[49]		
 		
 		CustomerTxObjects[counter].personalAssets.assetType = args[50]
 		CustomerTxObjects[counter].personalAssets.assetName = args[51]
@@ -250,22 +248,25 @@ func (t *CustomerChaincode) Invoke(stub shim.ChaincodeStubInterface, function st
 		CustomerTxObjects[counter].personalAssets.valueOfAsset = args[53]
 		CustomerTxObjects[counter].personalAssets.asOnDate = args[54]
 		
-		
+		CustomerTxObjects[counter].bankAccountDetails.bankName = args[55]
+		CustomerTxObjects[counter].bankAccountDetails.bankBranch = args[56]
+		CustomerTxObjects[counter].bankAccountDetails.accountNo = args[57]
+		CustomerTxObjects[counter].bankAccountDetails.swiftCode = args[58]
 		
 		
 		//Code for the Document Process	
-		fmt.Printf("********pankaj CUSTOMER_DOC:%s\n", args[4])
+		fmt.Printf("******** CUSTOMER_DOC:%s\n", args[4])
 		var number_of_docs int
-		number_of_docs = (len(args)-27)/2
-		var CustomerDocObjects1 []CustomerDoc
+		number_of_docs = (len(args)-59)/2
+		var CustomerDocObjects1 []KYCDocument
 		for i := 0; i < number_of_docs; i++ {
-			var CustomerDocObj CustomerDoc
-			fmt.Printf("********pankaj CustomerDocObj[i].DOCUMENT_NAMEC:%d\n",i)
-			fmt.Printf("********pankaj CustomerDocObj[i].DOCUMENT_NAMEC:%d\n",number_of_docs)
+			var CustomerDocObj KYCDocument
+			fmt.Printf("******** CustomerDocObj[i].DOCUMENT_NAMEC:%d\n",i)
+			fmt.Printf("******** CustomerDocObj[i].DOCUMENT_NAMEC:%d\n",number_of_docs)
 			//CustomerDocObj[i] := CustomerDoc{DOCUMENT_NAME: args[27+(i*2)], DOCUMENT_STRING: args[27+(i*2)]}
-			CustomerDocObj.DOCUMENT_NAME = args[27+(i*2)]
+			CustomerDocObj.DOCUMENT_NAME = args[59+(i*2)]
 			//fmt.Printf("********pankaj CustomerDocObj[i].DOCUMENT_NAMEC:%s\n", CustomerDocObj[i].DOCUMENT_NAME)
-			CustomerDocObj.DOCUMENT_STRING = args[28+(i*2)]
+			CustomerDocObj.DOCUMENT_STRING = args[60+(i*2)]
 			CustomerDocObjects1 = append(CustomerDocObjects1,CustomerDocObj)
 		}
 		CustomerTxObjects[counter].CUSTOMER_DOC = CustomerDocObjects1
@@ -295,8 +296,8 @@ func (t *CustomerChaincode)  RegisterCustomer(stub shim.ChaincodeStubInterface, 
 	var err error
    	fmt.Printf("********pankaj CUSTOMER_DOC:%d\n", len(args))
 	
-	if len(args) < 4 {
-		return nil, errors.New("Incorrect number of arguments. Need 4 arguments")
+	if len(args) < 8 {
+		return nil, errors.New("Incorrect number of arguments. Need 8 arguments")
 	}
 
 	// Initialize the chaincode
