@@ -92,7 +92,7 @@ type PersonalAssets struct{
 	details string `json:"details"`
 	valueOfAsset string `json:"valueOfAsset"`
 	asOnDate string `json:"asOnDate"`
-	assetType string `json:"assetType"`
+	
 }
 
 type BankDetails struct{
