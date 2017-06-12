@@ -260,12 +260,12 @@ func (t *CustomerChaincode) Invoke(stub shim.ChaincodeStubInterface, function st
 			fmt.Printf("******** CustomerDocObj[i].DOCUMENT_NAMEC:%d\n",i)
 			fmt.Printf("******** CustomerDocObj[i].DOCUMENT_NAMEC:%d\n",number_of_docs)
 			//CustomerDocObj[i] := CustomerDoc{DOCUMENT_NAME: args[27+(i*2)], DOCUMENT_STRING: args[27+(i*2)]}
-			CustomerDocObj.DOCUMENT_NAME = args[59+(i*2)]
+			CustomerDocObj.documentName = args[59+(i*2)]
 			//fmt.Printf("********pankaj CustomerDocObj[i].DOCUMENT_NAMEC:%s\n", CustomerDocObj[i].DOCUMENT_NAME)
-			CustomerDocObj.DOCUMENT_STRING = args[60+(i*2)]
+			CustomerDocObj.base64String = args[60+(i*2)]
 			CustomerDocObjects1 = append(CustomerDocObjects1,CustomerDocObj)
 		}
-		CustomerTxObjects[counter].CUSTOMER_DOC = CustomerDocObjects1
+		CustomerTxObjects[counter].kycDocuments = CustomerDocObjects1
 		
 		jsonAsBytes, _ := json.Marshal(CustomerTxObjects)
 		fmt.Printf("======json print ====:%s\n", jsonAsBytes)
@@ -372,17 +372,17 @@ func (t *CustomerChaincode)  RegisterCustomer(stub shim.ChaincodeStubInterface, 
 	number_of_docs = (len(args)-59)/2
 	var CustomerDocObjects1 []KYCDocuments
 	for i := 0; i < number_of_docs; i++ {
-		var CustomerDocObj CustomerDoc
+		var CustomerDocObj KYCDocuments
 		fmt.Printf("******** CustomerDocObj[i].DOCUMENT_NAMEC:%d\n",i)
 		fmt.Printf("******** CustomerDocObj[i].DOCUMENT_NAMEC:%d\n",number_of_docs)
 		//CustomerDocObj[i] := CustomerDoc{DOCUMENT_NAME: args[27+(i*2)], DOCUMENT_STRING: args[27+(i*2)]}
-		CustomerDocObj.DOCUMENT_NAME = args[59+(i*2)]
+		CustomerDocObj.documentName = args[59+(i*2)]
 		//fmt.Printf("********pankaj CustomerDocObj[i].DOCUMENT_NAMEC:%s\n", CustomerDocObj[i].DOCUMENT_NAME)
-		CustomerDocObj.DOCUMENT_STRING = args[60+(i*2)]
+		CustomerDocObj.base64String = args[60+(i*2)]
 		CustomerDocObjects1 = append(CustomerDocObjects1,CustomerDocObj)
 	}
 	
-	CustomerDataObj.CUSTOMER_DOC = CustomerDocObjects1
+	CustomerDataObj.kycDocuments = CustomerDocObjects1
 	
 	customerTxsAsBytes, err := stub.GetState(customerIndexTxStr)
 	if err != nil {
