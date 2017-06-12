@@ -341,8 +341,7 @@ func (t *CustomerChaincode)  RegisterCustomer(stub shim.ChaincodeStubInterface, 
 		CustomerDataObj.permanentAddress.addressType = args[32]
 		CustomerDataObj.permanentAddress.searchLocation = args[33]
 		
-		//TODO
-				CustomerDataObj.officeAddress.addrLine1 = args[34]
+		CustomerDataObj.officeAddress.addrLine1 = args[34]
 		CustomerDataObj.officeAddress.addrLine2 = args[35]
 		CustomerDataObj.officeAddress.city   = args[36]
 		CustomerDataObj.officeAddress.province = args[37]
@@ -409,7 +408,7 @@ func (t *CustomerChaincode)  RegisterCustomer(stub shim.ChaincodeStubInterface, 
 // Query callback representing the query of a chaincode
 func (t *CustomerChaincode) Query(stub shim.ChaincodeStubInterface,function string, args []string) ([]byte, error) {
 
-    var CUSTOMER_FIRST_NAME  string 
+   	var CUSTOMER_FIRST_NAME  string 
 	var CUSTOMER_MIDDLE_NAME string 
 	var CUSTOMER_LAST_NAME  string 
 	var CUSTOMER_DOB string
@@ -418,15 +417,15 @@ func (t *CustomerChaincode) Query(stub shim.ChaincodeStubInterface,function stri
 	var err error
 	var resAsBytes []byte
 
-	if len(args) != 6 {
+	if len(args) != 8 {
 		return nil, errors.New("Incorrect number of arguments. Expecting 6 parameters to query")
 	}
-	CUSTOMER_FIRST_NAME= args[0]
-	CUSTOMER_MIDDLE_NAME= args[1]
-	CUSTOMER_LAST_NAME = args[2]
-	CUSTOMER_DOB = args[3]
-	TAX_IDENTIFIER = args[4]
-	UNIQUE_IDENTIFIER = args[5]
+	CUSTOMER_FIRST_NAME= args[2]
+	CUSTOMER_MIDDLE_NAME= args[3]
+	CUSTOMER_LAST_NAME = args[4]
+	CUSTOMER_DOB = args[5]
+	TAX_IDENTIFIER = args[6]
+	UNIQUE_IDENTIFIER = args[7]
 	
 	resAsBytes, err = t.GetCustomerDetails(stub,CUSTOMER_FIRST_NAME,CUSTOMER_MIDDLE_NAME,CUSTOMER_LAST_NAME,CUSTOMER_DOB, TAX_IDENTIFIER, UNIQUE_IDENTIFIER)
         InitLogs(ioutil.Discard, os.Stdout, os.Stdout, os.Stderr)
@@ -484,8 +483,8 @@ func (t *CustomerChaincode)  GetCustomerDetails(stub shim.ChaincodeStubInterface
 	if err != nil {
 		return nil, errors.New("Failed to get Customer Records")
 	}
-	var CustomerTxObjects []CustomerData
-	var CustomerTxObjects1 []CustomerData
+	var CustomerTxObjects []InsuranceClientInformation
+	var CustomerTxObjects1 []InsuranceClientInformation
 	json.Unmarshal(CustomerTxsAsBytes, &CustomerTxObjects)
 	length := len(CustomerTxObjects)
 	fmt.Printf("Output from chaincode: %s\n", CustomerTxsAsBytes)
@@ -504,12 +503,12 @@ func (t *CustomerChaincode)  GetCustomerDetails(stub shim.ChaincodeStubInterface
 		obj := CustomerTxObjects[i]
 		//if ((customer_id == obj.CUSTOMER_ID) && (customer_name == obj.CUSTOMER_NAME) && (customer_dob == obj.CUSTOMER_DOB)) 
 		
-		if (((CUSTOMER_FIRST_NAME != "" && (obj.CUSTOMER_NAME.CUSTOMER_FIRST_NAME == CUSTOMER_FIRST_NAME)) || CUSTOMER_FIRST_NAME == "" ) && 
-		((CUSTOMER_MIDDLE_NAME != "" && (obj.CUSTOMER_NAME.CUSTOMER_MIDDLE_NAME == CUSTOMER_MIDDLE_NAME)) || CUSTOMER_MIDDLE_NAME == "" ) && 
-		((CUSTOMER_LAST_NAME != "" && (obj.CUSTOMER_NAME.CUSTOMER_LAST_NAME == CUSTOMER_LAST_NAME)) || CUSTOMER_LAST_NAME == "" ) &&
-		((CUSTOMER_DOB != "" && (obj.CUSTOMER_DOB == CUSTOMER_DOB)) || CUSTOMER_DOB == "" ) &&
-		((TAX_IDENTIFIER != "" && (obj.TAX_IDENTIFIER == TAX_IDENTIFIER)) || TAX_IDENTIFIER == "" ) &&
-		((UNIQUE_IDENTIFIER != "" && (obj.UNIQUE_IDENTIFIER == UNIQUE_IDENTIFIER)) || UNIQUE_IDENTIFIER == "" )){
+		if (((CUSTOMER_FIRST_NAME != "" && (obj.personalInfo.firstName == CUSTOMER_FIRST_NAME)) || CUSTOMER_FIRST_NAME == "" ) && 
+		((CUSTOMER_MIDDLE_NAME != "" && (obj.personalInfo.middleName == CUSTOMER_MIDDLE_NAME)) || CUSTOMER_MIDDLE_NAME == "" ) && 
+		((CUSTOMER_LAST_NAME != "" && (obj.personalInfo.lastName == CUSTOMER_LAST_NAME)) || CUSTOMER_LAST_NAME == "" ) &&
+		((CUSTOMER_DOB != "" && (obj.personalInfo.dateOfBirth == CUSTOMER_DOB)) || CUSTOMER_DOB == "" ) &&
+		((TAX_IDENTIFIER != "" && (obj.personalInfo.panNumber == TAX_IDENTIFIER)) || TAX_IDENTIFIER == "" ) &&
+		((UNIQUE_IDENTIFIER != "" && (obj.personalInfo.passportNumber == UNIQUE_IDENTIFIER)) || UNIQUE_IDENTIFIER == "" )){
 				CustomerTxObjects1 = append(CustomerTxObjects1,obj)
 				//requiredObj = obj
 				objFound = true
