@@ -102,7 +102,7 @@ type BankDetails struct{
 	swiftCode string `json:"swiftCode"`		
 }
 
-type KYCDocument struct{
+type KYCDocuments struct{
 	documentName string `json:"bankName"`
 	base64String string `json:"base64String"`	
 }
