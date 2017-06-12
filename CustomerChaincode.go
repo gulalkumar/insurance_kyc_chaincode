@@ -164,14 +164,14 @@ func (t *CustomerChaincode) Invoke(stub shim.ChaincodeStubInterface, function st
 		obj := CustomerTxObjects[i]
 		//if ((customer_id == obj.CUSTOMER_ID) && (customer_name == obj.CUSTOMER_NAME) && (customer_dob == obj.CUSTOMER_DOB)) 
 		
-		if (((obj.InsurancePersonalInfo.panNumber) == TAX_IDENTIFIER) && ((obj.InsurancePersonalInfo.passportNumber) == UNIQUE_IDENTIFIER)){			
+		if (((obj.personalInfo.panNumber) == TAX_IDENTIFIER) && ((obj.personalInfo.passportNumber) == UNIQUE_IDENTIFIER)){			
 			CustomerTxObjects1 = append(CustomerTxObjects1,obj)
 			//requiredObj = obj
 			objFound = true
 			counter = i
 			break;
 		} 
-		if ((((obj.InsurancePersonalInfo.panNumber) == TAX_IDENTIFIER) && ((obj.InsurancePersonalInfo.passportNumber) != UNIQUE_IDENTIFIER))||((((obj.InsurancePersonalInfo.panNumber) != TAX_IDENTIFIER) && ((obj.InsurancePersonalInfo.passportNumber) == UNIQUE_IDENTIFIER)  ))){
+		if ((((obj.personalInfo.panNumber) == TAX_IDENTIFIER) && ((obj.personalInfo.passportNumber) != UNIQUE_IDENTIFIER))||((((obj.personalInfo.panNumber) != TAX_IDENTIFIER) && ((obj.personalInfo.passportNumber) == UNIQUE_IDENTIFIER)  ))){
 			return nil, errors.New("Bad Request : Tax Identifier or Unique Identifier mapped for different Customer")
 		}
 	
