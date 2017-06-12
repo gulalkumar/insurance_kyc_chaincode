@@ -504,9 +504,12 @@ func (t *CustomerChaincode)  GetCustomerDetails(stub shim.ChaincodeStubInterface
 		((CUSTOMER_DOB != "" && (obj.personalInfo.dateOfBirth == CUSTOMER_DOB)) || CUSTOMER_DOB == "" ) &&
 		((TAX_IDENTIFIER != "" && (obj.personalInfo.panNumber == TAX_IDENTIFIER)) || TAX_IDENTIFIER == "" ) &&
 		((UNIQUE_IDENTIFIER != "" && (obj.personalInfo.passportNumber == UNIQUE_IDENTIFIER)) || UNIQUE_IDENTIFIER == "" )){
-				CustomerTxObjects1 = append(CustomerTxObjects1,obj)
-				//requiredObj = obj
-				objFound = true
+				
+			fmt.Printf("condition matched\n")
+			
+			CustomerTxObjects1 = append(CustomerTxObjects1,obj)
+			//requiredObj = obj
+			objFound = true
 				
 			
 		} else {
