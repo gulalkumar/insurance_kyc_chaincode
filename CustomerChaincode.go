@@ -342,50 +342,49 @@ func (t *CustomerChaincode)  RegisterCustomer(stub shim.ChaincodeStubInterface, 
 		CustomerDataObj.permanentAddress.searchLocation = args[33]
 		
 		//TODO
-		CustomerTxObjects[counter].officeAddress.addrLine1 = args[34]
-		CustomerTxObjects[counter].officeAddress.addrLine2 = args[35]
-		CustomerTxObjects[counter].officeAddress.city   = args[36]
-		CustomerTxObjects[counter].officeAddress.province = args[37]
-		CustomerTxObjects[counter].officeAddress.country = args[38]
-		CustomerTxObjects[counter].officeAddress.postalCode   = args[39]
-		CustomerTxObjects[counter].officeAddress.addressType = args[40]
-		CustomerTxObjects[counter].officeAddress.searchLocation = args[41]
-	
-		CustomerTxObjects[counter].contactDetails.homeNumber = args[42]
-		CustomerTxObjects[counter].contactDetails.officeNumber = args[43]
-		CustomerTxObjects[counter].contactDetails.mobileNumber = args[44]
-		CustomerTxObjects[counter].contactDetails.emailId = args[45]
+				CustomerDataObj.officeAddress.addrLine1 = args[34]
+		CustomerDataObj.officeAddress.addrLine2 = args[35]
+		CustomerDataObj.officeAddress.city   = args[36]
+		CustomerDataObj.officeAddress.province = args[37]
+		CustomerDataObj.officeAddress.country = args[38]
+		CustomerDataObj.officeAddress.postalCode   = args[39]
+		CustomerDataObj.officeAddress.addressType = args[40]
+		CustomerDataObj.officeAddress.searchLocation = args[41]
+	    
+		CustomerDataObj.contactDetails.homeNumber = args[42]
+		CustomerDataObj.contactDetails.officeNumber = args[43]
+		CustomerDataObj.contactDetails.mobileNumber = args[44]
+		CustomerDataObj.contactDetails.emailId = args[45]
 		
-		CustomerTxObjects[counter].employmentDetails.nameOfEmployer = args[46]
-		CustomerTxObjects[counter].employmentDetails.designation = args[47]
-		CustomerTxObjects[counter].employmentDetails.title = args[48]
-		CustomerTxObjects[counter].employmentDetails.noOfYearsExperience = args[49]		
+		CustomerDataObj.employmentDetails.nameOfEmployer = args[46]
+		CustomerDataObj.employmentDetails.designation = args[47]
+		CustomerDataObj.employmentDetails.title = args[48]
+		CustomerDataObj.employmentDetails.noOfYearsExperience = args[49]		
 		
-		CustomerTxObjects[counter].personalAssets.assetType = args[50]
-		CustomerTxObjects[counter].personalAssets.assetName = args[51]
-		CustomerTxObjects[counter].personalAssets.details = args[52]
-		CustomerTxObjects[counter].personalAssets.valueOfAsset = args[53]
-		CustomerTxObjects[counter].personalAssets.asOnDate = args[54]
+		CustomerDataObj.personalAssets.assetType = args[50]
+		CustomerDataObj.personalAssets.assetName = args[51]
+		CustomerDataObj.personalAssets.details = args[52]
+		CustomerDataObj.personalAssets.valueOfAsset = args[53]
+		CustomerDataObj.personalAssets.asOnDate = args[54]
 		
-		CustomerTxObjects[counter].bankAccountDetails.bankName = args[55]
-		CustomerTxObjects[counter].bankAccountDetails.bankBranch = args[56]
-		CustomerTxObjects[counter].bankAccountDetails.accountNo = args[57]
-		CustomerTxObjects[counter].bankAccountDetails.swiftCode = args[58]
-	
+		CustomerDataObj.bankAccountDetails.bankName = args[55]
+		CustomerDataObj.bankAccountDetails.bankBranch = args[56]
+		CustomerDataObj.bankAccountDetails.accountNo = args[57]
+		CustomerDataObj.bankAccountDetails.swiftCode = args[58]	
 	
 	//Code for the Document Process	
 	fmt.Printf("********RegisterCustomer CUSTOMER_DOC Proceesing :%s\n", args[4])
 	var number_of_docs int
-	number_of_docs = (len(args)-27)/2
-	var CustomerDocObjects1 []CustomerDoc
+	number_of_docs = (len(args)-59)/2
+	var CustomerDocObjects1 []KYCDocuments
 	for i := 0; i < number_of_docs; i++ {
 		var CustomerDocObj CustomerDoc
-		fmt.Printf("********pankaj CustomerDocObj[i].DOCUMENT_NAMEC:%d\n",i)
-		fmt.Printf("********pankaj CustomerDocObj[i].DOCUMENT_NAMEC:%d\n",number_of_docs)
+		fmt.Printf("******** CustomerDocObj[i].DOCUMENT_NAMEC:%d\n",i)
+		fmt.Printf("******** CustomerDocObj[i].DOCUMENT_NAMEC:%d\n",number_of_docs)
 		//CustomerDocObj[i] := CustomerDoc{DOCUMENT_NAME: args[27+(i*2)], DOCUMENT_STRING: args[27+(i*2)]}
-		CustomerDocObj.DOCUMENT_NAME = args[27+(i*2)]
+		CustomerDocObj.DOCUMENT_NAME = args[59+(i*2)]
 		//fmt.Printf("********pankaj CustomerDocObj[i].DOCUMENT_NAMEC:%s\n", CustomerDocObj[i].DOCUMENT_NAME)
-		CustomerDocObj.DOCUMENT_STRING = args[28+(i*2)]
+		CustomerDocObj.DOCUMENT_STRING = args[60+(i*2)]
 		CustomerDocObjects1 = append(CustomerDocObjects1,CustomerDocObj)
 	}
 	
