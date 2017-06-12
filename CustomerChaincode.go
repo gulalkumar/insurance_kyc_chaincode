@@ -179,8 +179,6 @@ func (t *CustomerChaincode) Invoke(stub shim.ChaincodeStubInterface, function st
 	
 	if objFound {
 		
-		//TODO
-		
 		//Update CustomerTxObjects1 with new values from args 
 		
 		CustomerTxObjects[counter].clientId = args[0]
@@ -220,8 +218,7 @@ func (t *CustomerChaincode) Invoke(stub shim.ChaincodeStubInterface, function st
 		CustomerTxObjects[counter].permanentAddress.country = args[30]
 		CustomerTxObjects[counter].permanentAddress.postalCode   = args[31]
 		CustomerTxObjects[counter].permanentAddress.addressType = args[32]
-		CustomerTxObjects[counter].permanentAddress.searchLocation = args[33]
-		
+		CustomerTxObjects[counter].permanentAddress.searchLocation = args[33]		
 		
 		CustomerTxObjects[counter].officeAddress.addrLine1 = args[34]
 		CustomerTxObjects[counter].officeAddress.addrLine2 = args[35]
@@ -251,8 +248,7 @@ func (t *CustomerChaincode) Invoke(stub shim.ChaincodeStubInterface, function st
 		CustomerTxObjects[counter].bankAccountDetails.bankName = args[55]
 		CustomerTxObjects[counter].bankAccountDetails.bankBranch = args[56]
 		CustomerTxObjects[counter].bankAccountDetails.accountNo = args[57]
-		CustomerTxObjects[counter].bankAccountDetails.swiftCode = args[58]
-		
+		CustomerTxObjects[counter].bankAccountDetails.swiftCode = args[58]		
 		
 		//Code for the Document Process	
 		fmt.Printf("******** CUSTOMER_DOC:%s\n", args[4])
@@ -319,8 +315,7 @@ func (t *CustomerChaincode)  RegisterCustomer(stub shim.ChaincodeStubInterface, 
 		CustomerDataObj.personalInfo.maritalStatus   = args[14]
 		CustomerDataObj.personalInfo.criminalRecordDetails = args[15]
 		CustomerDataObj.personalInfo.financialStability = args[16]
-		CustomerDataObj.personalInfo.creditScore   = args[17]
-		
+		CustomerDataObj.personalInfo.creditScore   = args[17]	
 		
 		CustomerDataObj.residenceAddress.addrLine1 = args[18]
 		CustomerDataObj.residenceAddress.addrLine2 = args[19]
