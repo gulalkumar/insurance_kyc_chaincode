@@ -291,10 +291,10 @@ func (t *CustomerChaincode) Invoke(stub shim.ChaincodeStubInterface, function st
 
 func (t *CustomerChaincode)  RegisterCustomer(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
 
-	var CustomerDataObj CustomerData
-	var CustomerDataList []CustomerData
+	var CustomerDataObj InsuranceClientInformation
+	var CustomerDataList []InsuranceClientInformation
 	var err error
-   	fmt.Printf("********pankaj CUSTOMER_DOC:%d\n", len(args))
+   	fmt.Printf("******** CUSTOMER_DOC:%d\n", len(args))
 	
 	if len(args) < 8 {
 		return nil, errors.New("Incorrect number of arguments. Need 8 arguments")
@@ -302,37 +302,77 @@ func (t *CustomerChaincode)  RegisterCustomer(stub shim.ChaincodeStubInterface, 
 
 	// Initialize the chaincode
 	
-	//Code for Name Initialization
-	CustomerDataObj.CUSTOMER_NAME.CUSTOMER_FIRST_NAME = args[0]
-	CustomerDataObj.CUSTOMER_NAME.CUSTOMER_MIDDLE_NAME = args[1]
-	CustomerDataObj.CUSTOMER_NAME.CUSTOMER_LAST_NAME   = args[2]
-	CustomerDataObj.TAX_IDENTIFIER = args[3]
-	CustomerDataObj.UNIQUE_IDENTIFIER = args[4]
-	CustomerDataObj.CUSTOMER_DOB = args[5]
-	CustomerDataObj.CUSTOMER_RESIDENT_STATUS = args[6]
-	CustomerDataObj.CUSTOMER_KYC_PROCESS_DATE = args[7]
-	CustomerDataObj.CUSTOMER_KYC_FLAG = args[8]
-	//Code for CustomerResidenceAddr Initialization
-	CustomerDataObj.CUSTOMER_RESIDENCE_ADDR.AddressLine1 = args[9]
-	CustomerDataObj.CUSTOMER_RESIDENCE_ADDR.AddressLine2 = args[10]
-	CustomerDataObj.CUSTOMER_RESIDENCE_ADDR.PostalCode   = args[11]
-	CustomerDataObj.CUSTOMER_RESIDENCE_ADDR.City = args[12]
-	CustomerDataObj.CUSTOMER_RESIDENCE_ADDR.Province = args[13]
-	CustomerDataObj.CUSTOMER_RESIDENCE_ADDR.Country   = args[14]
-	//Code for CustomerPermanentAddr Initialization
-	CustomerDataObj.CUSTOMER_PERMANENT_ADDR.AddressLine1 = args[15]
-	CustomerDataObj.CUSTOMER_PERMANENT_ADDR.AddressLine2 = args[16]
-	CustomerDataObj.CUSTOMER_PERMANENT_ADDR.PostalCode   = args[17]
-	CustomerDataObj.CUSTOMER_PERMANENT_ADDR.City = args[18]
-	CustomerDataObj.CUSTOMER_PERMANENT_ADDR.Province = args[19]
-	CustomerDataObj.CUSTOMER_PERMANENT_ADDR.Country   = args[20]
-	//Code for CustomerOfficeAddr Initialization
-	CustomerDataObj.CUSTOMER_OFFICE_ADDR.AddressLine1 = args[21]
-	CustomerDataObj.CUSTOMER_OFFICE_ADDR.AddressLine2 = args[22]
-	CustomerDataObj.CUSTOMER_OFFICE_ADDR.PostalCode   = args[23]
-	CustomerDataObj.CUSTOMER_OFFICE_ADDR.City = args[24]
-	CustomerDataObj.CUSTOMER_OFFICE_ADDR.Province = args[25]
-	CustomerDataObj.CUSTOMER_OFFICE_ADDR.Country   = args[26]
+		CustomerDataObj.clientId = args[0]
+		CustomerDataObj.personalInfo.applicantNumber = args[1]
+		CustomerDataObj.personalInfo.firstName = args[2]
+		CustomerDataObj.personalInfo.middleName = args[3]
+		CustomerDataObj.personalInfo.lastName = args[4]
+		CustomerDataObj.personalInfo.dateOfBirth= args[5]
+		CustomerDataObj.personalInfo.panNumber = args[6]
+		CustomerDataObj.personalInfo.passportNumber = args[7]
+		CustomerDataObj.personalInfo.residentStatus = args[8]
+		CustomerDataObj.personalInfo.residencePlaceOwnership = args[9]
+		CustomerDataObj.personalInfo.numberofDependents = args[10]
+		CustomerDataObj.personalInfo.qualification   = args[11]
+		CustomerDataObj.personalInfo.annualIncome = args[12]
+		CustomerDataObj.personalInfo.gender = args[13]
+		CustomerDataObj.personalInfo.maritalStatus   = args[14]
+		CustomerDataObj.personalInfo.criminalRecordDetails = args[15]
+		CustomerDataObj.personalInfo.financialStability = args[16]
+		CustomerDataObj.personalInfo.creditScore   = args[17]
+		
+		
+		CustomerDataObj.residenceAddress.addrLine1 = args[18]
+		CustomerDataObj.residenceAddress.addrLine2 = args[19]
+		CustomerDataObj.residenceAddress.city   = args[20]
+		CustomerDataObj.residenceAddress.province = args[21]
+		CustomerDataObj.residenceAddress.country = args[22]
+		CustomerDataObj.residenceAddress.postalCode   = args[23]
+		CustomerDataObj.residenceAddress.addressType = args[24]
+		CustomerDataObj.residenceAddress.searchLocation = args[25]
+		
+		
+		CustomerDataObj.permanentAddress.addrLine1 = args[26]
+		CustomerDataObj.permanentAddress.addrLine2 = args[27]
+		CustomerDataObj.permanentAddress.city   = args[28]
+		CustomerDataObj.permanentAddress.province = args[29]
+		CustomerDataObj.permanentAddress.country = args[30]
+		CustomerDataObj.permanentAddress.postalCode   = args[31]
+		CustomerDataObj.permanentAddress.addressType = args[32]
+		CustomerDataObj.permanentAddress.searchLocation = args[33]
+		
+		//TODO
+		CustomerTxObjects[counter].officeAddress.addrLine1 = args[34]
+		CustomerTxObjects[counter].officeAddress.addrLine2 = args[35]
+		CustomerTxObjects[counter].officeAddress.city   = args[36]
+		CustomerTxObjects[counter].officeAddress.province = args[37]
+		CustomerTxObjects[counter].officeAddress.country = args[38]
+		CustomerTxObjects[counter].officeAddress.postalCode   = args[39]
+		CustomerTxObjects[counter].officeAddress.addressType = args[40]
+		CustomerTxObjects[counter].officeAddress.searchLocation = args[41]
+	
+		CustomerTxObjects[counter].contactDetails.homeNumber = args[42]
+		CustomerTxObjects[counter].contactDetails.officeNumber = args[43]
+		CustomerTxObjects[counter].contactDetails.mobileNumber = args[44]
+		CustomerTxObjects[counter].contactDetails.emailId = args[45]
+		
+		CustomerTxObjects[counter].employmentDetails.nameOfEmployer = args[46]
+		CustomerTxObjects[counter].employmentDetails.designation = args[47]
+		CustomerTxObjects[counter].employmentDetails.title = args[48]
+		CustomerTxObjects[counter].employmentDetails.noOfYearsExperience = args[49]		
+		
+		CustomerTxObjects[counter].personalAssets.assetType = args[50]
+		CustomerTxObjects[counter].personalAssets.assetName = args[51]
+		CustomerTxObjects[counter].personalAssets.details = args[52]
+		CustomerTxObjects[counter].personalAssets.valueOfAsset = args[53]
+		CustomerTxObjects[counter].personalAssets.asOnDate = args[54]
+		
+		CustomerTxObjects[counter].bankAccountDetails.bankName = args[55]
+		CustomerTxObjects[counter].bankAccountDetails.bankBranch = args[56]
+		CustomerTxObjects[counter].bankAccountDetails.accountNo = args[57]
+		CustomerTxObjects[counter].bankAccountDetails.swiftCode = args[58]
+	
+	
 	//Code for the Document Process	
 	fmt.Printf("********RegisterCustomer CUSTOMER_DOC Proceesing :%s\n", args[4])
 	var number_of_docs int
