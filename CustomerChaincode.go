@@ -422,6 +422,10 @@ func (t *CustomerChaincode) Query(stub shim.ChaincodeStubInterface,function stri
 	TAX_IDENTIFIER = args[6]
 	UNIQUE_IDENTIFIER = args[7]
 	
+	fmt.Printf("First Name \n")
+	fmt.Printf(CUSTOMER_FIRST_NAME)
+	
+	
 	resAsBytes, err = t.GetCustomerDetails(stub,CUSTOMER_FIRST_NAME,CUSTOMER_MIDDLE_NAME,CUSTOMER_LAST_NAME,CUSTOMER_DOB, TAX_IDENTIFIER, UNIQUE_IDENTIFIER)
         InitLogs(ioutil.Discard, os.Stdout, os.Stdout, os.Stderr)
         Trace.Println("I have something standard to say")
@@ -471,7 +475,10 @@ func InitLogs(
 }
 
 func (t *CustomerChaincode)  GetCustomerDetails(stub shim.ChaincodeStubInterface,CUSTOMER_FIRST_NAME string,CUSTOMER_MIDDLE_NAME string,CUSTOMER_LAST_NAME string,CUSTOMER_DOB string, TAX_IDENTIFIER string, UNIQUE_IDENTIFIER string) ([]byte, error) {
-
+	
+	fmt.Printf("inside second method \n")
+	fmt.Printf(CUSTOMER_FIRST_NAME)
+	
 	//var requiredObj CustomerData
 	var objFound bool
 	CustomerTxsAsBytes, err := stub.GetState(customerIndexTxStr)
