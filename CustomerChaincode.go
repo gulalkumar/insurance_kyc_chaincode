@@ -254,9 +254,9 @@ func (t *CustomerChaincode) Invoke(stub shim.ChaincodeStubInterface, function st
 		fmt.Printf("******** CUSTOMER_DOC:%s\n", args[4])
 		var number_of_docs int
 		number_of_docs = (len(args)-59)/2
-		var CustomerDocObjects1 []KYCDocument
+		var CustomerDocObjects1 []KYCDocuments
 		for i := 0; i < number_of_docs; i++ {
-			var CustomerDocObj KYCDocument
+			var CustomerDocObj KYCDocuments
 			fmt.Printf("******** CustomerDocObj[i].DOCUMENT_NAMEC:%d\n",i)
 			fmt.Printf("******** CustomerDocObj[i].DOCUMENT_NAMEC:%d\n",number_of_docs)
 			//CustomerDocObj[i] := CustomerDoc{DOCUMENT_NAME: args[27+(i*2)], DOCUMENT_STRING: args[27+(i*2)]}
