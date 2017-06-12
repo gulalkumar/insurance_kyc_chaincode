@@ -103,7 +103,7 @@ type BankDetails struct{
 }
 
 type KYCDocuments struct{
-	documentName string `json:"bankName"`
+	documentName string `json:"documentName"`
 	base64String string `json:"base64String"`	
 }
 
