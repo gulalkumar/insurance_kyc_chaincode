@@ -71,6 +71,12 @@ type Address struct{
 	searchLocation string `json:"searchLocation"`
 }
 
+type ContactDetails struct{
+	homeNumber string `json:"homeNumber"`
+	officeNumber string `json:"officeNumber"`
+	mobileNumber string `json:"mobileNumber"`
+	emailId string `json:"emailId"`
+}
 
 type EmploymentDetails struct{
 	nameOfEmployer string `json:"nameOfEmployer"`
@@ -225,9 +231,26 @@ func (t *CustomerChaincode) Invoke(stub shim.ChaincodeStubInterface, function st
 		CustomerTxObjects[counter].officeAddress.postalCode   = args[39]
 		CustomerTxObjects[counter].officeAddress.addressType = args[40]
 		CustomerTxObjects[counter].officeAddress.searchLocation = args[41]
+	
+		CustomerTxObjects[counter].contactDetails.homeNumber = args[42]
+		CustomerTxObjects[counter].contactDetails.officeNumber = args[43]
+		CustomerTxObjects[counter].contactDetails.mobileNumber = args[44]
+		CustomerTxObjects[counter].contactDetails.emailId = args[45]
+		
+		CustomerTxObjects[counter].employmentDetails.nameOfEmployer = args[46]
+		CustomerTxObjects[counter].employmentDetails.designation = args[47]
+		CustomerTxObjects[counter].employmentDetails.title = args[48]
+		CustomerTxObjects[counter].employmentDetails.noOfYearsExperience = args[49]
 		
 		
-		//TODO 
+		
+		CustomerTxObjects[counter].personalAssets.assetType = args[50]
+		CustomerTxObjects[counter].personalAssets.assetName = args[51]
+		CustomerTxObjects[counter].personalAssets.details = args[52]
+		CustomerTxObjects[counter].personalAssets.valueOfAsset = args[53]
+		CustomerTxObjects[counter].personalAssets.asOnDate = args[54]
+		
+		
 		
 		
 		//Code for the Document Process	
